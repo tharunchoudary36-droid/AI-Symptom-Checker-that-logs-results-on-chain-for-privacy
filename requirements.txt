@@ -1,0 +1,6 @@
+flask
+flask-cors
+requests
+gunicorn
+python-dotenv
+web3

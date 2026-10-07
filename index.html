@@ -1,0 +1,1058 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>Symptom Ledger</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f4f7fc;
+      --card: #ffffff;
+      --text: #14213d;
+      --muted: #667085;
+      --border: #e4e9f2;
+
+      --blue: #315bea;
+      --blue-dark: #2448c7;
+      --blue-light: #edf2ff;
+
+      --green: #16a34a;
+      --green-light: #ecfdf3;
+
+      --orange: #f59e0b;
+      --orange-light: #fff7ed;
+
+      --red: #dc2626;
+      --red-light: #fef2f2;
+
+      --shadow: 0 10px 35px rgba(32, 52, 89, .08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Inter", system-ui, sans-serif;
+      color: var(--text);
+
+      background:
+        radial-gradient(
+          circle at 10% 0%,
+          rgba(49,91,234,.10),
+          transparent 28%
+        ),
+        radial-gradient(
+          circle at 90% 10%,
+          rgba(99,102,241,.08),
+          transparent 25%
+        ),
+        var(--bg);
+    }
+
+    /* ================= HEADER ================= */
+
+    header {
+      max-width: 1320px;
+      margin: auto;
+      padding: 25px 28px 18px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .brand-icon {
+      width: 48px;
+      height: 48px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 14px;
+
+      background: linear-gradient(
+        135deg,
+        #315bea,
+        #735cf6
+      );
+
+      color: white;
+      font-size: 24px;
+
+      box-shadow:
+        0 8px 22px rgba(49,91,234,.25);
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -.035em;
+    }
+
+    .brand-subtitle {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: .75rem;
+    }
+
+    .wallet-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #net {
+      color: var(--muted);
+      font-size: .78rem;
+      font-weight: 600;
+    }
+
+    #connect {
+      border: 0;
+      border-radius: 11px;
+
+      padding: 10px 16px;
+
+      background: #111827;
+      color: white;
+
+      font: inherit;
+      font-weight: 700;
+
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    #connect:hover {
+      background: #263247;
+      transform: translateY(-1px);
+    }
+
+    /* ================= HERO ================= */
+
+    .hero {
+      max-width: 1320px;
+      margin: auto;
+      padding: 0 28px 22px;
+    }
+
+    .hero-card {
+      position: relative;
+      overflow: hidden;
+
+      padding: 30px 38px;
+
+      border-radius: 22px;
+
+      background:
+        radial-gradient(
+          circle at 85% 25%,
+          rgba(255,255,255,.15),
+          transparent 25%
+        ),
+        linear-gradient(
+          135deg,
+          #1747b8,
+          #315bea 55%,
+          #6556e8
+        );
+
+      color: white;
+
+      box-shadow:
+        0 18px 45px rgba(49,91,234,.22);
+    }
+
+    .hero-card::after {
+      content: "✦";
+      position: absolute;
+
+      right: 70px;
+      top: 35px;
+
+      font-size: 100px;
+      opacity: .08;
+    }
+
+    .hero-title {
+      margin: 0 0 7px;
+
+      font-size: clamp(1.6rem, 3vw, 2.15rem);
+      font-weight: 800;
+
+      letter-spacing: -.045em;
+    }
+
+    .hero-description {
+      max-width: 750px;
+
+      margin: 0;
+
+      color: rgba(255,255,255,.84);
+
+      font-size: .9rem;
+      line-height: 1.7;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+
+      margin-top: 20px;
+    }
+
+    .hero-tag {
+      padding: 7px 12px;
+
+      border-radius: 999px;
+
+      background: rgba(255,255,255,.13);
+      border: 1px solid rgba(255,255,255,.18);
+
+      font-size: .72rem;
+      font-weight: 600;
+
+      backdrop-filter: blur(10px);
+    }
+
+    /* ================= MAIN ================= */
+
+    main {
+      max-width: 1320px;
+      margin: auto;
+
+      padding: 0 28px 35px;
+
+      display: grid;
+
+      grid-template-columns:
+        minmax(0, 1.35fr)
+        minmax(350px, .65fr);
+
+      gap: 20px;
+    }
+
+    section {
+      background: rgba(255,255,255,.96);
+
+      border: 1px solid var(--border);
+      border-radius: 19px;
+
+      padding: 22px;
+
+      box-shadow: var(--shadow);
+    }
+
+    /* ================= SECTION TITLE ================= */
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+
+      margin-bottom: 16px;
+    }
+
+    .section-icon {
+      width: 38px;
+      height: 38px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 11px;
+
+      background: var(--blue-light);
+
+      font-size: 18px;
+    }
+
+    .section-title {
+      margin: 0;
+
+      font-size: 1rem;
+      font-weight: 800;
+
+      letter-spacing: -.02em;
+    }
+
+    .section-subtitle {
+      margin-top: 2px;
+
+      color: var(--muted);
+
+      font-size: .72rem;
+    }
+
+    /* ================= NOTICE ================= */
+
+    .notice {
+      display: flex;
+      gap: 9px;
+
+      padding: 11px 13px;
+
+      margin-bottom: 14px;
+
+      border: 1px solid #dce5f2;
+      border-radius: 11px;
+
+      background: #f8fafc;
+
+      color: var(--muted);
+
+      font-size: .72rem;
+    }
+
+    .notice strong {
+      color: var(--text);
+    }
+
+    /* ================= CHAT ================= */
+
+    #log {
+      height: 355px;
+
+      overflow-y: auto;
+
+      display: flex;
+      flex-direction: column;
+
+      gap: 10px;
+
+      padding: 5px 3px 15px;
+
+      scrollbar-width: thin;
+    }
+
+    .m {
+      max-width: 82%;
+
+      padding: 11px 14px;
+
+      border-radius: 14px;
+
+      white-space: pre-wrap;
+
+      font-size: .84rem;
+
+      box-shadow:
+        0 2px 8px rgba(0,0,0,.025);
+    }
+
+    .u {
+      align-self: flex-end;
+
+      color: white;
+
+      background:
+        linear-gradient(
+          135deg,
+          #315bea,
+          #526ff0
+        );
+
+      border-bottom-right-radius: 4px;
+    }
+
+    .a {
+      align-self: flex-start;
+
+      background: #f2f5f8;
+
+      border: 1px solid #e7ebf0;
+
+      border-bottom-left-radius: 4px;
+    }
+
+    /* ================= INPUT ================= */
+
+    form {
+      display: flex;
+      gap: 9px;
+    }
+
+    input {
+      flex: 1;
+      min-width: 0;
+
+      padding: 13px 14px;
+
+      border: 1px solid var(--border);
+      border-radius: 11px;
+
+      background: #f8fafc;
+
+      color: var(--text);
+
+      font: inherit;
+
+      outline: none;
+
+      transition: .2s;
+    }
+
+    input::placeholder {
+      color: #98a2b3;
+    }
+
+    input:focus {
+      background: white;
+
+      border-color: #7890f3;
+
+      box-shadow:
+        0 0 0 4px rgba(49,91,234,.10);
+    }
+
+    form button {
+      padding: 0 19px;
+
+      border: 0;
+      border-radius: 11px;
+
+      background: var(--blue);
+
+      color: white;
+
+      font: inherit;
+      font-weight: 700;
+
+      cursor: pointer;
+
+      transition: .2s;
+    }
+
+    form button:hover {
+      background: var(--blue-dark);
+      transform: translateY(-1px);
+    }
+
+    /* ================= CARE LEVEL ================= */
+
+    #care {
+      display: none;
+
+      padding: 14px 16px;
+
+      margin: 15px 0 12px;
+
+      border-left: 5px solid var(--border);
+      border-radius: 11px;
+
+      background: #f8fafc;
+    }
+
+    .c0 {
+      border-color: var(--green) !important;
+      background: var(--green-light) !important;
+    }
+
+    .c1 {
+      border-color: var(--orange) !important;
+      background: var(--orange-light) !important;
+    }
+
+    .c2 {
+      border-color: var(--red) !important;
+      background: var(--red-light) !important;
+    }
+
+    /* ================= SAVE ================= */
+
+    #save {
+      width: 100%;
+
+      padding: 13px 15px;
+
+      border: 1px solid #cbd6ff;
+      border-radius: 11px;
+
+      background: linear-gradient(
+        135deg,
+        #eef2ff,
+        #e2e9ff
+      );
+
+      color: var(--blue);
+
+      font: inherit;
+      font-weight: 750;
+
+      cursor: pointer;
+
+      transition: .2s;
+    }
+
+    #save:hover:not(:disabled) {
+      background: #dfe7ff;
+      transform: translateY(-1px);
+    }
+
+    #save:disabled {
+      opacity: .5;
+      cursor: default;
+    }
+
+    .status {
+      color: var(--muted);
+
+      margin-top: 8px;
+
+      min-height: 1.4em;
+
+      font-size: .74rem;
+    }
+
+    /* ================= PRIVACY ================= */
+
+    .privacy-card {
+      margin-top: 15px;
+
+      padding: 15px;
+
+      border-radius: 13px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #f8faff,
+          #f1f5ff
+        );
+
+      border: 1px solid #dce4ff;
+    }
+
+    .privacy-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      margin-bottom: 8px;
+
+      font-size: .8rem;
+      font-weight: 800;
+    }
+
+    .privacy-description {
+      margin: 0 0 10px;
+
+      color: var(--muted);
+
+      font-size: .69rem;
+    }
+
+    .privacy-grid {
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 7px;
+    }
+
+    .privacy-item {
+      color: #526071;
+
+      font-size: .68rem;
+    }
+
+    .privacy-item::before {
+      content: "✓";
+
+      margin-right: 6px;
+
+      color: var(--green);
+
+      font-weight: 800;
+    }
+
+    /* ================= RECORDS ================= */
+
+    #tl {
+      max-height: 505px;
+
+      overflow-y: auto;
+
+      padding-right: 2px;
+    }
+
+    .row {
+      margin-bottom: 10px;
+
+      padding: 15px;
+
+      border: 1px solid var(--border);
+      border-radius: 13px;
+
+      background: white;
+
+      display: flex;
+      flex-direction: column;
+
+      gap: 8px;
+
+      transition: .2s;
+    }
+
+    .row:hover {
+      border-color: #c9d3f8;
+
+      transform: translateY(-1px);
+
+      box-shadow:
+        0 5px 15px rgba(30,50,90,.05);
+    }
+
+    .row strong {
+      font-size: .87rem;
+    }
+
+    .row small {
+      color: var(--muted);
+
+      font-size: .69rem;
+
+      word-break: break-all;
+    }
+
+    .btns {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      align-items: center;
+
+      gap: 7px;
+    }
+
+    .btns button {
+      padding: 6px 10px;
+
+      border: 1px solid #dbe2ec;
+      border-radius: 8px;
+
+      background: #f4f6f9;
+
+      color: #344054;
+
+      font: inherit;
+      font-size: .7rem;
+      font-weight: 700;
+
+      cursor: pointer;
+    }
+
+    .btns button:hover {
+      background: #e9edf3;
+    }
+
+    .btns a {
+      padding: 6px 10px;
+
+      border-radius: 8px;
+
+      background: var(--blue-light);
+
+      color: var(--blue);
+
+      text-decoration: none;
+
+      font-size: .7rem;
+      font-weight: 700;
+    }
+
+    .btns a:hover {
+      background: #dfe6ff;
+    }
+
+    /* ================= EMPTY STATE ================= */
+
+    .empty-state {
+      padding: 45px 15px;
+
+      text-align: center;
+
+      color: var(--muted);
+    }
+
+    .empty-icon {
+      width: 52px;
+      height: 52px;
+
+      margin: 0 auto 12px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 15px;
+
+      background: var(--blue-light);
+
+      font-size: 21px;
+    }
+
+    .empty-state strong {
+      display: block;
+
+      margin-bottom: 4px;
+
+      color: var(--text);
+
+      font-size: .85rem;
+    }
+
+    /* ================= FOCUS ================= */
+
+    :focus-visible {
+      outline: 3px solid #f2b705;
+
+      outline-offset: 3px;
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media(max-width: 900px) {
+
+      main {
+        grid-template-columns: 1fr;
+      }
+
+      #log {
+        height: 300px;
+      }
+
+    }
+
+    @media(max-width: 600px) {
+
+      header {
+        padding: 18px 16px 15px;
+
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .wallet-area {
+        width: 100%;
+
+        justify-content: space-between;
+      }
+
+      .hero {
+        padding: 0 16px 18px;
+      }
+
+      .hero-card {
+        padding: 23px;
+
+        border-radius: 17px;
+      }
+
+      main {
+        padding: 0 16px 25px;
+      }
+
+      section {
+        padding: 17px;
+
+        border-radius: 15px;
+      }
+
+      .privacy-grid {
+        grid-template-columns: 1fr;
+      }
+
+      form button {
+        padding: 0 14px;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================= HEADER ================= -->
+
+  <header>
+
+    <div class="brand">
+
+      <div class="brand-icon">
+        🩺
+      </div>
+
+      <div>
+        <h1 class="brand-title">
+          Symptom Ledger
+        </h1>
+
+        <p class="brand-subtitle">
+          Private symptom checking with verifiable records
+        </p>
+      </div>
+
+    </div>
+
+
+    <div class="wallet-area">
+
+      <span id="net"></span>
+
+      <button id="connect">
+        🦊 Connect wallet
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- ================= HERO ================= -->
+
+  <div class="hero">
+
+    <div class="hero-card">
+
+      <h2 class="hero-title">
+        Your health information, your control.
+      </h2>
+
+      <p class="hero-description">
+        Get a symptom-based care suggestion while keeping sensitive
+        information private. Blockchain is used to verify the integrity
+        of your saved health-check records.
+      </p>
+
+
+      <div class="hero-tags">
+
+        <span class="hero-tag">
+          🔐 Privacy-first
+        </span>
+
+        <span class="hero-tag">
+          ⛓️ Blockchain verified
+        </span>
+
+        <span class="hero-tag">
+          🦊 MetaMask
+        </span>
+
+        <span class="hero-tag">
+          ⚡ Ethereum Sepolia
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================= MAIN ================= -->
+
+  <main>
+
+
+    <!-- ================= SYMPTOM CHECKER ================= -->
+
+    <section aria-label="Symptom chat">
+
+      <div class="section-header">
+
+        <div class="section-icon">
+          🩺
+        </div>
+
+        <div>
+
+          <h2 class="section-title">
+            Symptom Checker
+          </h2>
+
+          <div class="section-subtitle">
+            Describe what you're experiencing
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="notice">
+
+        <span>
+          ℹ️
+        </span>
+
+        <div>
+          <strong>Important:</strong>
+          This is a demonstration and not a medical diagnosis.
+          If you have a medical emergency, contact your local emergency service.
+        </div>
+
+      </div>
+
+
+      <!-- Existing JS writes chat messages here -->
+
+      <div id="log" aria-live="polite"></div>
+
+
+      <!-- Existing JS listens to this form -->
+
+      <form id="f">
+
+        <input
+          id="t"
+          placeholder="e.g. I have had a sore throat for two days"
+          autocomplete="off"
+          aria-label="Your message"
+        >
+
+        <button type="submit">
+          ➤ Send
+        </button>
+
+      </form>
+
+
+      <!-- Existing JS controls this -->
+
+      <div id="care"></div>
+
+
+      <!-- Existing JS controls this -->
+
+      <button id="save" disabled>
+        🔐 Save encrypted check to chain
+      </button>
+
+
+      <p
+        class="status"
+        id="st"
+        role="status"
+      ></p>
+
+
+      <!-- Privacy information -->
+
+      <div class="privacy-card">
+
+        <div class="privacy-title">
+          🔒 Your privacy is protected
+        </div>
+
+        <p class="privacy-description">
+          Your raw symptoms remain private. The application uses
+          encryption and a cryptographic hash for blockchain verification.
+        </p>
+
+        <div class="privacy-grid">
+
+          <div class="privacy-item">
+            Session encrypted
+          </div>
+
+          <div class="privacy-item">
+            Raw symptoms kept off-chain
+          </div>
+
+          <div class="privacy-item">
+            Cryptographic hash recorded
+          </div>
+
+          <div class="privacy-item">
+            Record can be verified
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= BLOCKCHAIN RECORDS ================= -->
+
+    <section aria-label="Timeline">
+
+      <div class="section-header">
+
+        <div class="section-icon">
+          ⛓️
+        </div>
+
+        <div>
+
+          <h2 class="section-title">
+            Blockchain Records
+          </h2>
+
+          <div class="section-subtitle">
+            Your saved and verifiable health checks
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- IMPORTANT:
+           app.js already writes records into #tl -->
+
+      <div id="tl">
+
+        <div class="empty-state">
+
+          <div class="empty-icon">
+            🔐
+          </div>
+
+          <strong>
+            No saved checks yet
+          </strong>
+
+          <p class="status">
+            Complete a symptom check and save it to the blockchain.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- ================= EXISTING JAVASCRIPT ================= -->
+
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.2/dist/ethers.umd.min.js"></script>
+
+  <script src="config.js"></script>
+
+  <script src="app.js"></script>
+
+</body>
+</html>
